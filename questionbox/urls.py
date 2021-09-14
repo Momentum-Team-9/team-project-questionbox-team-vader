@@ -5,8 +5,9 @@ from django.urls import path, include
 from core import views as question_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', question_views.index, name='index'),
+    path('accounts/', include('registration.backends.default.urls')),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
