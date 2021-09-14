@@ -7,7 +7,6 @@ from core import views as question_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', question_views.index, name='index'),
-    path('core/', include('core.urls')),
 ]
 
 if settings.DEBUG:
