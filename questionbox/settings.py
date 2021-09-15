@@ -3,8 +3,6 @@ import environ
 import os
 import django_on_heroku
 
-django_on_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
 
 env = environ.Env(
     # set casting, default value
@@ -36,11 +34,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django_extensions',
+    'djoser',
+    'core',
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,17 +79,6 @@ WSGI_APPLICATION = 'questionbox.wsgi.application'
 
 DATABASES = {'default': env.db()}
 
-CACHES = {
-    # Read os.environ['CACHE_URL'] and raises
-    # ImproperlyConfigured exception if not found.
-    #
-    # The cache() method is an alias for cache_url().
-    'default': env.cache(),
-
-    # read os.environ['REDIS_URL']
-    'redis': env.cache_url('REDIS_URL')
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -121,7 +111,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -129,6 +118,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIR = [
     BASE_DIR / 'static',
 ]
+
+SIMPLE_BACKEND_REDIRECT_URL = '/'
 
 # Debug toolbar config
 
@@ -142,3 +133,8 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'core.User'
+
+django_on_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
