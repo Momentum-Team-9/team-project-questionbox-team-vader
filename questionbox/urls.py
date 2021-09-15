@@ -3,12 +3,13 @@ from django.conf import settings
 from django.urls import path, include
 
 from core import views as question_views
-from core.views import QuestionListViewSet
+from core.views import QuestionListViewSet, AnswerListViewSet
 from rest_framework.routers import SimpleRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
 router = SimpleRouter()
 router.register("api/questions", QuestionListViewSet)
+router.register("api/answers", AnswerListViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

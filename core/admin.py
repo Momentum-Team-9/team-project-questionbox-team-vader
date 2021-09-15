@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Question
+from .models import User, Question, Answer
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -7,4 +7,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['question', 'created_date', 'author']
+    list_display = ['question', 'created_date', 'author',]
+    
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['question', 'created_date', 'author',]
