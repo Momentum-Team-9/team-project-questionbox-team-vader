@@ -16,6 +16,7 @@ urlpatterns = [
     path('accounts/', include('registration.backends.default.urls')),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
+    #path('question/add/', question_views.add_question, name
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
 ]
@@ -23,4 +24,3 @@ urlpatterns = [
 # *get profile view/account
 # **put question create
 # *get question detail
-# ***register new user
