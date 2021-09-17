@@ -48,7 +48,7 @@ class Answer(models.Model):
         User, on_delete=models.SET_NULL, related_name='answer', null=True)
     created_date = models.DateField(default=date.today)
     question = models.ForeignKey(
-        Question, on_delete=models.SET_NULL, related_name='answers', null=True)
+        User, on_delete=models.SET_NULL, related_name='answers', null=True)
     accepted = models.BooleanField(default=False)
     bookmark = models.ManyToManyField(User, related_name='bookmarked_answers', blank=True)
 
