@@ -4,6 +4,25 @@ from django.contrib.auth.models import AbstractUser
 from datetime import date
 
 class User(AbstractUser):
+    def create_user(self, email, password):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user=self.model(
+            email=self.normalize_email(email),
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
+    USER_CREATE_PASSWORD_RETYPE=True
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['first_name','last_name', 'email']
 
     def __repr__(self):
         return f"<User username={self.username}>"
