@@ -4,10 +4,15 @@ from rest_framework import serializers
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
+    #author = serializers.SerializerMethodField()
+    
+    #author = serializers.SlugRelatedField(read_only=False, slug_field="username")
     class Meta:
         model = Question
         fields = ('pk', 'question', 'created_date', 'author')
+        
+    # def get_author(self,obj):
+    #     return str(obj.author_id.username)
         
         
 class AnswerSerializer(serializers.ModelSerializer):
