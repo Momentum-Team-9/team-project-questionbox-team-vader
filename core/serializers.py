@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 class QuestionSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(read_only = True, default = serializers.CurrentUserDefault())
-    answers = serializers.SerializerMethodField()
+#    answers = serializers.SerializerMethodField()
     class Meta:
         model = Question
         fields = ('pk', 'question', 'created_date', 'author', 'answers')
@@ -13,9 +13,9 @@ class QuestionSerializer(serializers.ModelSerializer):
     #     author =  self.context['request'].user
     #     print('general '+ str(author))
     #     question = self.validated_data['question']
-    def get_answers(self):
-        dir(self)
-        print(dir(self))
+    # def get_answers(self):
+    #     dir(self)
+    #     print(dir(self))
         
                 
 class AnswerSerializer(serializers.ModelSerializer):

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import path, include
 
 from core import views as question_views
-from core.views import AnswersForQuestions, QuestionListViewSet, AnswerListViewSet
+from core.views import QuestionListViewSet, AnswerListViewSet
 from rest_framework.routers import SimpleRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -16,7 +16,7 @@ urlpatterns = [
     path('accounts/', include('registration.backends.default.urls')),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/questions/<int:pk>/answers/', question_views.AnswersForQuestions),
+    path('api/questions/<int:pk>/detail/', question_views.question_detail),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
 ]

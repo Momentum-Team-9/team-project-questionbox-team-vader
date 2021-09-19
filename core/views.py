@@ -25,11 +25,14 @@ class QuestionDetailsViewSet(ModelViewSet):
 class AnswerListViewSet(ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
-    
-def AnswersForQuestions(request, pk):
+
+def question_detail(request, pk):
     question = get_object_or_404(Question, pk = pk)
-    output = []
-    
+    output = QuestionSerializer(question).data
+
+    answers = []
     for answer in question.answers.all():
-        output.append(AnswerSerializer(answer).data)
-    return JsonResponse({'answers': output})
+        answers.append(AnswerSerializer(answer).data)
+    output['answers'] = answers
+
+    return JsonResponse(output)
