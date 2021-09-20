@@ -7,7 +7,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 #    answers = serializers.SerializerMethodField()
     class Meta:
         model = Question
-        fields = ('pk', 'question', 'created_date', 'author', 'answers')
+        fields = ('pk', 'question', 'details', 'created_date', 'author', 'answers')
     # def save(self):
     #     print('hello there')
     #     author =  self.context['request'].user
@@ -17,7 +17,15 @@ class QuestionSerializer(serializers.ModelSerializer):
     #     dir(self)
     #     print(dir(self))
         
-                
+        
+class QuestionListSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(read_only=True, slug_field='username')
+
+    class Meta:
+        model = Question
+        fields = ('pk', 'question', 'created_date', 'author',)
+        
+        
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
