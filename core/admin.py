@@ -11,4 +11,4 @@ class QuestionAdmin(admin.ModelAdmin):
     
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ['question', 'created_date', 'author',]
+    list_display = ['pk', 'answer', 'question', 'created_date', 'author',]
