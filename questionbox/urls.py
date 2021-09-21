@@ -7,7 +7,6 @@ from rest_framework.routers import SimpleRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
 router = SimpleRouter()
-router.register("answers", question_views.AnswerListViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,6 +15,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/questions/<int:pk>/', question_views.QuestionDetailsViewSet.as_view(), name='question-detail'),
     path('api/questions/', question_views.QuestionListViewSet.as_view(), name='question-list'),
+    path('api/answers/new/', question_views.AddAnswerViewSet.as_view(), name='answer-new'),
+    path('auth/users/me', question_views.UserQuestionListViewSet.as_view(), name='user-profile'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
 ]

@@ -1,13 +1,11 @@
+from rest_framework.permissions import IsAuthenticated
 from core.permissions import IsQuestionOwnerOrReadOnly
-from django.http import JsonResponse
 
-from rest_framework.generics import get_object_or_404
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import CreateAPIView, ListAPIView, get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.exceptions import PermissionDenied
 
-from .models import Question, Answer
-from .serializers import QuestionDetailSerializer, QuestionSerializer, AnswerSerializer, QuestionListSerializer
+from .models import Answer, User, Question
+from .serializers import AnswerSerializer, ProfileListSerializer, QuestionDetailSerializer, QuestionListSerializer
 
 
 class QuestionListViewSet(ListCreateAPIView):
@@ -17,24 +15,29 @@ class QuestionListViewSet(ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
         
-
+    
+class UserQuestionListViewSet(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = ProfileListSerializer
+    
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     return queryset.filter(username=self.request.user)
+    
+    def get_queryset(self):
+        queryset = self.queryset.filter(username=self.request.user)
+        return queryset
+    
+        
 class QuestionDetailsViewSet(RetrieveUpdateDestroyAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionDetailSerializer
     permission_classes = [IsQuestionOwnerOrReadOnly]
     
-
-class AnswerListViewSet(ModelViewSet):
+    
+class AddAnswerViewSet(CreateAPIView):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
-
-    def question_detail(request, pk):
-        question = get_object_or_404(Question, pk = pk)
-        output = QuestionSerializer(question).data
-
-        answers = []
-        for answer in question.answers.all():
-            answers.append(AnswerSerializer(answer).data)
-        output['answers'] = answers
-
-        return JsonResponse(output)
+    permission_classes = [IsAuthenticated]
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
