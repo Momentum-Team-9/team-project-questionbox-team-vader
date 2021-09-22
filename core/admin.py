@@ -7,7 +7,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['question', 'created_date', 'author',]
+    list_display = ['pk', 'question', 'created_date', 'author',]
     
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
